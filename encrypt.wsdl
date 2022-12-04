@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<wsdl:definitions name="Encrypt"
+                  targetNamespace="localhost:8000/encrypt.wsdl"
+                  xmlns:tns="localhost:8000/encrypt.wsdl"
+                  xmlns:xsd1="localhost:8000/encrypt.xsd"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+
+    <wsdl:types>
+        <xsd:schema targetNamespace="localhost:8000/encrypt.xsd"
+                    xmlns:xsd="http://www.w3.org/2000/10/XMLSchema">
+            <xsd:element name="string" type="xsd:string"/>
+            <xsd:element name="result" type="xsd:string"/>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="encryptRequest">
+        <wsdl:part name="name" element="xsd1:string"/>
+    </wsdl:message>
+
+    <wsdl:message name="encryptResponse">
+        <wsdl:part name="result" element="xsd1:result"/>
+    </wsdl:message>
+
+    <wsdl:portType name="EncryptPortType">
+        <wsdl:operation name="encryptAes">
+            <wsdl:input message="tns:encryptRequest"/>
+            <wsdl:output message="tns:encryptResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="EncryptBinding" type="tns:EncryptPortType">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="encryptAes">
+            <soap:operation soapAction="localhost:8000/encryptAes"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="EncryptService">
+        <wsdl:port name="EncryptPort" binding="tns:EncryptBinding">
+            <soap:address location="http://localhost:8000/encrypt"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>
