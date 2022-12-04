@@ -16,7 +16,7 @@ const service = {
                     result: encrypted
                 });
             },
-            encryptSha256: (string) => {
+            encryptSha: (string) => {
                 const encrypted =  CryptoJS.SHA256.encrypt(string).toString();
                 console.log(string);
                 return({
@@ -24,6 +24,7 @@ const service = {
                 });
             }
         }
+
     }
 };
 
